@@ -47,13 +47,12 @@ public class DealershipFileManager {
             bufferedReader.close();
             return dealership;
 
-        } catch (Exception e) {
-            Exception exception = e;
+        } catch (Exception exception) {
 
             exception.printStackTrace();
-            return null;
-        }
 
+        }
+        return null;
     }
 
     public static void saveDealership(Dealership dealership) {

@@ -22,12 +22,23 @@ public class Dealership {
     public List<Vehicle> getVehiclesByPrice(double min, double max){return null;} // List<Vehicle>
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){return null;} // List<Vehicle>
     public List<Vehicle> getVehiclesByYear(int min, int max){return null;} // List<Vehicle>
-    public List<Vehicle> getVehiclesByColor(String color){return null;} //List<Vehicle>
+    public List<Vehicle> getVehiclesByColor(String color) {
+       List<Vehicle> colorMatch = new ArrayList<>();
+       for(Vehicle vehicle: inventory){
+        if(vehicle.getColor().equalsIgnoreCase(color)){
+            colorMatch.add(vehicle);
+        }
+       }
+       return colorMatch;
+    }
+
+    //List<Vehicle>
     public List<Vehicle> getVehiclesByMileage(int min, int max){return null;} // List <Vehicle>
     public List<Vehicle> getVehiclesByType(String vehicleType){return null;} // List<Vehicle>
     public List<Vehicle> getAllVehicles(){
         return this.inventory;
     } // List<Vehicle>
+
 
     public String getName() {
         return name;
@@ -61,6 +72,8 @@ public class Dealership {
      public  void removeVehicle(Vehicle vehicle){
         this.inventory.remove(vehicle);
      } // removes vehicle
+
+
 
     @Override
     public String toString() {
