@@ -104,7 +104,26 @@ public class UserInterface {
 
     }
     public static void processAddVehicleRequest(){}
-    public static void processRemoveVehicleRequest(){}
+    public static void processRemoveVehicleRequest(){
+        int index = 1;
+        List<Vehicle> vehicles = dealership.getAllVehicles();
+            for(Vehicle vehicle: vehicles){
+                System.out.println(index + " " + vehicle);
+                index++;
+            }
+        System.out.println("Select the vehicle to remove by its number:");
+            int vehicleNumber = inputScanner.nextInt();
+
+            if(vehicleNumber < 1 || vehicleNumber > vehicles.size()){
+                System.out.println("Invalid vehicle selection. . .");
+            } else {
+                Vehicle vehicleToRemove = vehicles.get(vehicleNumber - 1);
+                dealership.removeVehicle(vehicleToRemove);
+            }
+
+
+
+    }
 
 private static void displayVehicles(Vehicle vehicle){
     //Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price
