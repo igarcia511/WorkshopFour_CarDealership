@@ -32,9 +32,16 @@ public class Dealership {
        return colorMatch;
     }
 
-    //List<Vehicle>
     public List<Vehicle> getVehiclesByMileage(int min, int max){return null;} // List <Vehicle>
-    public List<Vehicle> getVehiclesByType(String vehicleType){return null;} // List<Vehicle>
+    public List<Vehicle> getVehiclesByType(String vehicleType){
+        List<Vehicle> typeMatch = new ArrayList<>();
+         for(Vehicle vehicle : inventory){
+             if(vehicle.getVehicleType().equalsIgnoreCase(vehicleType)){
+                 typeMatch.add(vehicle);
+             }
+         }
+         return typeMatch;
+    }
     public List<Vehicle> getAllVehicles(){
         return this.inventory;
     } // List<Vehicle>

@@ -1,5 +1,6 @@
 package com.ps;
 
+import java.io.FileWriter;
 import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
@@ -59,6 +60,7 @@ public class UserInterface {
                     break;
                 case 6:
                     processGetByVehicleTypeRequest();
+                    break;
                 case 7:
                     processGetAllVehiclesRequest();
                     break;
@@ -94,7 +96,15 @@ public class UserInterface {
 
     }
     public static void  processGetByMileageRequest(){}
-    public static void processGetByVehicleTypeRequest(){}
+    public static void processGetByVehicleTypeRequest(){
+        System.out.print("Enter the type of vehicle you are searching for(suv, truck, sedan): ");
+        String vehicleType = inputScanner.nextLine();
+        List<Vehicle> vehicles = dealership.getVehiclesByType(vehicleType);
+        for(Vehicle vehicle : vehicles){
+            displayVehicles(vehicle);
+        }
+
+    }
     public static void processGetAllVehiclesRequest(){
         System.out.println("Displaying all vehicles");
        List<Vehicle> vehicles = dealership.getAllVehicles();
@@ -103,23 +113,60 @@ public class UserInterface {
        }
 
     }
-    public static void processAddVehicleRequest(){}
+    public static void processAddVehicleRequest(){
+        System.out.println("Enter details of vehicle to add:");
+        //int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price
+        System.out.print("Enter the vin number: ");
+        int vinNumber = inputScanner.nextInt();
+        inputScanner.nextLine();
+        System.out.print("Enter the year:");
+        int yearNumber = inputScanner.nextInt();
+        inputScanner.nextLine();
+        System.out.print("Enter the make:");
+        String make = inputScanner.nextLine();
+        System.out.print("Enter the model:");
+        String model = inputScanner.nextLine();
+        System.out.print("Enter vehicle type(suv, truck, sedan):");
+        String type = inputScanner.nextLine();
+        System.out.print("Enter the color: ");
+        String color = inputScanner.nextLine();
+        System.out.print("Enter the mileage: ");
+        int mileage = inputScanner.nextInt();
+        inputScanner.nextLine();
+        System.out.print("Enter the price: ");
+        double price = inputScanner.nextDouble();
+
+        Vehicle vehicle = new Vehicle(vinNumber, yearNumber, make, model, type, color, mileage, price);
+        dealership.addVehicle(vehicle);
+        DealershipFileManager.saveDealership(dealership);
+    }
     public static void processRemoveVehicleRequest(){
+
         int index = 1;
         List<Vehicle> vehicles = dealership.getAllVehicles();
-            for(Vehicle vehicle: vehicles){
-                System.out.println(index + " " + vehicle);
-                index++;
-            }
-        System.out.println("Select the vehicle to remove by its number:");
-            int vehicleNumber = inputScanner.nextInt();
+        for(Vehicle vehicle : vehicles){
+            System.out.printf(index + " " + "%d|%d|%s|%s|%s|%s|%d|%.2f\n",
+                    vehicle.getVin(),
+                    vehicle.getYear(),
+                    vehicle.getMake(),
+                    vehicle.getModel(),
+                    vehicle.getVehicleType(),
+                    vehicle.getColor(),
+                    vehicle.getOdometer(),
+                    vehicle.getPrice());
+            index++;
+        }
 
-            if(vehicleNumber < 1 || vehicleNumber > vehicles.size()){
-                System.out.println("Invalid vehicle selection. . .");
-            } else {
-                Vehicle vehicleToRemove = vehicles.get(vehicleNumber - 1);
-                dealership.removeVehicle(vehicleToRemove);
-            }
+        System.out.println("Select the vehicle you want to remove by its number");
+        int vehicleNumber = inputScanner.nextInt();
+        Vehicle vehicle = vehicles.get(vehicleNumber - 1);
+
+        if(vehicleNumber < 1){
+            System.out.println("Invalid vehicle");
+        } else {
+            dealership.removeVehicle(vehicle);
+        }
+        DealershipFileManager.saveDealership(dealership);
 
 
 
