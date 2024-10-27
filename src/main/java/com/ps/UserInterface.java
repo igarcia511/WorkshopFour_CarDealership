@@ -30,16 +30,16 @@ public class UserInterface {
         int mainMenuCommand;
         do {
             System.out.println("1) to get vehicles by price");
-            System.out.println("2) to get vehicle by make and model");
-            System.out.println("3) to get vehicle by year");
-            System.out.println("4) to get vehicle by color");
-            System.out.println("5) to get vehicle by mileage");
+            System.out.println("2) to get vehicles by make and model");
+            System.out.println("3) to get vehicles by year");
+            System.out.println("4) to get vehicles by color");
+            System.out.println("5) to get vehicles by mileage");
             System.out.println("6) to get vehicles by type(suv, truck, sedan)");
             System.out.println("7) to get all vehicles");
             System.out.println("8) to add a vehicle");
             System.out.println("9) to remove a vehicle");
 
-            System.out.println("Command: ");
+            System.out.print("Command: ");
             mainMenuCommand = commandScanner.nextInt();
 
             switch (mainMenuCommand) {
@@ -82,9 +82,43 @@ public class UserInterface {
         } while (mainMenuCommand != 0);
 
     }
-   public static void processGetByPriceRequest(){}
-   public static void  processGetByMakeModelRequest(){}
-    public static void processGetByYearRequest(){}
+   public static void processGetByPriceRequest(){
+       System.out.println("Searching by price:");
+       System.out.print("Enter the minimum price: ");
+       double minPrice = inputScanner.nextInt();
+       inputScanner.nextLine();
+       System.out.print("Enter the maximum price: ");
+       double maxPrice = inputScanner.nextInt();
+       inputScanner.nextLine();
+
+       List<Vehicle> vehicles = dealership.getVehiclesByPrice(minPrice, maxPrice);
+       for(Vehicle vehicle : vehicles){
+           displayVehicles(vehicle);
+       }
+   }
+   public static void  processGetByMakeModelRequest(){
+       System.out.println("Searching by make and model");
+       System.out.print("Enter the make: ");
+       String make = inputScanner.nextLine();
+       System.out.print("Enter the model: ");
+       String model = inputScanner.nextLine();
+       List<Vehicle> vehicles = dealership.getVehiclesByMakeModel(make, model);
+        for(Vehicle vehicle :vehicles){
+            displayVehicles(vehicle);
+        }
+   }
+    public static void processGetByYearRequest(){
+        System.out.print("Enter the start year: ");
+        int startYear = inputScanner.nextInt();
+        inputScanner.nextLine();
+        System.out.print("Enter the end year: ");
+        int endYear = inputScanner.nextInt();
+        List<Vehicle> vehicles = dealership.getVehiclesByYear(startYear, endYear);
+        for(Vehicle vehicle : vehicles){
+            displayVehicles(vehicle);
+        }
+
+    }
     public static void processGetByColorRequest(){
         System.out.print("Enter the color you are looking for:");
         String userColorChoice = inputScanner.nextLine();
@@ -95,7 +129,20 @@ public class UserInterface {
 
 
     }
-    public static void  processGetByMileageRequest(){}
+    public static void  processGetByMileageRequest(){
+        System.out.print("Enter the minimum miles:");
+        int minMiles = inputScanner.nextInt();
+        inputScanner.nextLine();
+        System.out.print("Enter the maximum miles:");
+        int maxMiles = inputScanner.nextInt();
+        inputScanner.nextLine();
+       List<Vehicle> vehicles = dealership.getVehiclesByMileage(minMiles, maxMiles);
+       for(Vehicle vehicle : vehicles){
+           displayVehicles(vehicle);
+       }
+
+
+    }
     public static void processGetByVehicleTypeRequest(){
         System.out.print("Enter the type of vehicle you are searching for(suv, truck, sedan): ");
         String vehicleType = inputScanner.nextLine();
